@@ -1,12 +1,14 @@
-#[macro_use]
-extern crate rocket;
+#[macro_use] extern crate rocket;
+#[macro_use] extern crate rocket_contrib;
+
+use rocket_contrib::json::JsonValue;
 
 #[get("/")]
-fn hello() -> &'static str {
-    "hello world"
+fn hello() ->  JsonValue {
+    json!("hello world")
 }
 
-#[rocker::main]
+#[rocket::main]
 async fn main() {
     let _ = rocket::ignite()
         .mount("/", routes![hello])
