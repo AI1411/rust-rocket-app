@@ -36,6 +36,11 @@ fn delete_rustacean(id: i32) -> status::NoContent {
     status::NoContent
 }
 
+#[catch(404)]
+fn not_found() -> JsonValue {
+    json!("Not Found!")
+}
+
 #[rocket::main]
 async fn main() {
     let _ = rocket::ignite()
@@ -45,6 +50,8 @@ async fn main() {
             create_rustaceans,
             update_rustaceans,
             delete_rustacean,
+        ]).register(catchers![
+            not_found
         ])
         .launch()
         .await;
